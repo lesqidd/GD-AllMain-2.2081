@@ -72,7 +72,6 @@ namespace {
             stats->checkCoinAchievement(level);
         }
 
-        // Save progress using the game's save system.
         if (auto* app = AppDelegate::get()) {
             app->trySaveGame(true);
         }
@@ -91,7 +90,7 @@ class $modify(AllMainMenuLayer, MenuLayer) {
             return true;
 
         auto* button = CCMenuItemSpriteExtra::create(
-            ButtonSprite::create("Main 100%"),
+            ButtonSprite::create("100%"),
             this,
             menu_selector(AllMainMenuLayer::onCompleteAll)
         );
@@ -99,8 +98,14 @@ class $modify(AllMainMenuLayer, MenuLayer) {
         if (!button)
             return true;
 
+        // Smaller, less intrusive button
+        button->setScale(0.50f);
+
         menu->addChild(button);
-        menu->setPosition({115.f, 34.f});
+
+        // Bottom-left corner
+        menu->setPosition({45.f, 22.f});
+
         this->addChild(menu, 100);
         menu->setID("main-completer-menu");
 
