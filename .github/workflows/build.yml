@@ -1,0 +1,27 @@
+
+name: Build GD 2.2081 mod
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+jobs:
+  windows:
+    runs-on: windows-2022
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Windows Geode mod
+        uses: geode-sdk/build-geode-mod@main
+        id: build
+        with:
+          sdk: v5.11.2
+          target: Win64
+      - name: Upload built mod
+        uses: actions/upload-artifact@v4
+        with:
+          name: GD-AllMain-2.2081-Win64
+          path: ${{ steps.build.outputs.build-output }}
+          if-no-files-found: error
